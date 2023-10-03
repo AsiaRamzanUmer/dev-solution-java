@@ -24,7 +24,7 @@ public class TicketServiceImpl implements TicketService {
     public void purchaseTickets(Long accountId, TicketTypeRequest... ticketTypeRequests) throws InvalidPurchaseException {
         ArrayList<TicketTypeRequest> list = new ArrayList<>();
         list.addAll(List.of(ticketTypeRequests));
-        // Rejects any invalid ticket purchase requests. 
+       
         ticketRequestValidator.validateId(accountId);
         if (ticketRequestValidator.validatePurchaseRequest(list)) {
             //Calculate the correct amount for the requested tickets
