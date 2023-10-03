@@ -20,16 +20,22 @@ public class TicketServiceImpl implements TicketService {
 
     private TicketBookingService ticketBookingService = new TicketBookingServiceImpl();
 
+    /**
+     * Method to calculate the amount and make payment, and calculate no of seats to reserve, and calculate tickets
+     *
+     * @param accountId
+     * @param ticketTypeRequests
+     */
     @Override
     public void purchaseTickets(Long accountId, TicketTypeRequest... ticketTypeRequests) throws InvalidPurchaseException {
         ArrayList<TicketTypeRequest> list = new ArrayList<>();
         list.addAll(List.of(ticketTypeRequests));
-        // Rejects any invalid ticket purchase requests. 
+
         ticketRequestValidator.validateId(accountId);
         if (ticketRequestValidator.validatePurchaseRequest(list)) {
-            //Calculate the correct amount for the requested tickets
+
             ticketBookingService.calculateTotalAndMakePayment(accountId, list);
-            // Calculate the correct no of seats to reserve
+
             ticketBookingService.calculateAndReserveSeats(accountId, list);
 
             ticketBookingService.getTotalTickets(list);
